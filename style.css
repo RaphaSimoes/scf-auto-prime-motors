@@ -1,0 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Viaoda+Libre&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: linear-gradient(343deg,rgba(255, 222, 89, 1) 0%, rgba(255, 145, 77, 1) 50%, rgba(255, 77, 77, 1) 100%);
+
+    box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 50px 10px inset, rgba(0, 0, 0, 0.3) 0px 1px 300px 90px inset;
+
+    width: 100vw;
+    height: 100vh;
+}
