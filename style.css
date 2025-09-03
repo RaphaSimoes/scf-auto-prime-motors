@@ -1,4 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Roboto:ital,wght@0,100..900;1,100..900&family=Viaoda+Libre&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Oswald:wght@200..700&display=swap');
+
+:root {
+    --cor-background-gradiante: linear-gradient(343deg, rgba(255, 222, 89, 1) 0%, rgba(255, 145, 77, 1) 50%, rgba(255, 77, 77, 1) 100%);
+    --cor-background-sistema: #1a1a1a;
+    --cor-botão-verde: #00a337;
+    --cor-botão-azul: #0072a3;
+    --cor-botão-vermelho: #a30000;
+    --cor-botão-cinza: #242424;
+    --cor-botão-cinza2: #6b6d6c;
+}
 
 * {
     margin: 0;
@@ -6,11 +16,122 @@
     box-sizing: border-box;
 }
 
-body{
-    background: linear-gradient(343deg,rgba(255, 222, 89, 1) 0%, rgba(255, 145, 77, 1) 50%, rgba(255, 77, 77, 1) 100%);
-
+body {
+    background: var(--cor-background-gradiante);
+    font-family: "Open Sans", sans-serif;
     box-shadow: rgba(0, 0, 0, 0.25) 1px 1px 50px 10px inset, rgba(0, 0, 0, 0.3) 0px 1px 300px 90px inset;
-
     width: 100vw;
     height: 100vh;
+}
+
+.titulo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.titulo h1 {
+    font-family: "Oswald", sans-serif;
+    font-size: 1.2rem;
+    color: #ffff;
+    text-shadow: 1px 1.5px #242424;
+    justify-content: center;
+    text-align: center;
+
+}
+
+.linha-titulo-cima {
+    background-color: black;
+    width: 160px;
+    height: 2px;
+    margin: 25px 44rem 0px;
+}
+
+.linha-titulo-baixo {
+    background-color: black;
+    width: 160px;
+    height: 2.4px;
+    margin: 3px 44rem 0px;
+}
+
+.box-sistema {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: var(--cor-background-sistema);
+    margin: 1rem 15rem;
+    padding: 1rem 0 33rem;
+    border-radius: 25px;
+}
+
+.menu-info {
+    display: flex;
+    align-items: center;
+    gap: 45px;
+    flex-wrap: wrap;
+}
+
+
+.btncadastrar {
+    background-color: var(--cor-botão-verde);
+    padding: 7px 15px;
+    border-radius: 30px;
+    color: #ffff;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    border: none;
+    transition: 0.3s ease;
+    flex-direction: column;
+}
+
+.btncadastrar:hover {
+    background-color: #017e2b;
+    cursor: pointer;
+}
+
+.buscar-box {
+    background-color: #ffff;
+    width: 28rem;
+    height: 1.8rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 15px;
+}
+
+.buscar-box i {
+    font-size: 13px;
+    margin-left: 18px;
+    align-items: center;
+}
+
+.buscar-box .input-buscar {
+    position: relative;
+    width: 85%;
+    height: 100%;
+    outline: 0;
+    border: 0;
+}
+
+.filtrostatus {
+    border-radius: 15px;
+    padding: 8px 2rem;
+    border: none;
+
+}
+
+.btnfiltro {
+    background-color: var(--cor-botão-azul);
+    padding: 7px 2rem;
+    border-radius: 30px;
+    color: #ffff;
+    font-family: "Open Sans", sans-serif;
+    font-weight: 600;
+    border: none;
+    transition: 0.3s ease;
+}
+
+.btnfiltro:hover {
+    background-color: #015a81;
+    cursor: pointer;
 }

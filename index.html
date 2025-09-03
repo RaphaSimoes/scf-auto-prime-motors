@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Auto Prime Motors</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <script src="app.js"></script>
 </head>
+
 <body>
+    <header>
+        <div class="titulo">
+            <div class="linha-titulo-cima"></div>
+            <h1>Auto Prime Motors</h1>
+            <div class="linha-titulo-baixo"></div>
+        </div>
+    </header>
+
+    <main>
+        <div class="box-sistema">
+            <div class="menu-info">
+                <button class="btncadastrar" id="cadastrar">Cadastrar</button>
+
+                <div class="buscar-box">
+                    <div class="lupa-buscar">
+                        <i class="bi bi-search"></i>
+                    </div>
+                    <input type="text" placeholder="Buscar por cargo" class="input-buscar">
+                </div>
+
+                <select id="filtro-status" class="filtrostatus">
+                    <option value="Ativo">Ativo</option>
+                    <option value="Inativo">Inativo</option>
+                </select>
+
+                <button class="btnfiltro" id="filtrar">Filtrar</button>
+            </div>
+
+            <section class="tabelafuncionarios">
+                <table>
+                    <thead>
+                        <tr class="linha-cabecalho">
+                            <th>Nome do(a) Funcionário(a)</th>
+                            <th>Cargo</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tabelafuncionarios">
+                    </tbody>
+                </table>
+            </section>
+        </div>
+    </main>
 </body>
+
 </html>
