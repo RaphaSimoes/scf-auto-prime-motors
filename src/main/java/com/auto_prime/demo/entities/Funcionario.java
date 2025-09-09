@@ -1,7 +1,9 @@
 package com.auto_prime.demo.entities;
 
+import com.auto_prime.demo.dto.FuncionarioDTO;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import com.auto_prime.demo.dto.FuncionarioDTO;
 
 import java.time.Instant;
 
@@ -20,18 +22,51 @@ public class Funcionario {
     private String endereco;
     private String telefone;
 
+    public void atualizarComDTO(FuncionarioDTO dto) {
+        this.setNome(dto.getNome());
+        this.setCpf(dto.getCpf());
+        this.setCargo(dto.getCargo());
+        this.setSetor(dto.getSetor());
+        this.setDataDeAdmissao(dto.getDataDeAdmissao());
+        this.setSalario(dto.getSalario());
+        this.setEndereco(dto.getEndereco());
+        this.setTelefone(dto.getTelefone());
+    }
+
     public Funcionario(){
     }
 
-    public Funcionario(String nome, String cpf, String cargo, String setor, Instant dataDeAdmissao, Double salario, String endereço, String telefone) {
+
+    public Funcionario(FuncionarioDTO dto) {
+        this.nome = dto.getNome();
+        this.cpf = dto.getCpf();
+        this.cargo = dto.getCargo();
+        this.setor = dto.getSetor();
+        this.dataDeAdmissao = dto.getDataDeAdmissao();
+        this.salario = dto.getSalario();
+        this.endereco = dto.getEndereco();
+        this.telefone = dto.getTelefone();
+    }
+
+    public Funcionario(String id, String nome, String cpf, String cargo, String setor, Instant dataDeAdmissao, Double salario, String endereco, String telefone) {
+        this.id = id;
         this.nome = nome;
         this.cpf = cpf;
         this.cargo = cargo;
         this.setor = setor;
         this.dataDeAdmissao = dataDeAdmissao;
         this.salario = salario;
-        this.endereco = endereço;
+        this.endereco = endereco;
         this.telefone = telefone;
+    }
+
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getNome() {
@@ -97,4 +132,7 @@ public class Funcionario {
     public void setTelefone(String telefone) {
         this.telefone = telefone;
     }
+
+
 }
+

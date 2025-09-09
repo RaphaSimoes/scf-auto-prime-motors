@@ -1,61 +1,75 @@
 package com.auto_prime.demo.services;
 
+
+import com.auto_prime.demo.dto.FuncionarioDTO;
 import com.auto_prime.demo.entities.Funcionario;
+import com.auto_prime.demo.exceptions.ResourceNotFoundException;
 import com.auto_prime.demo.repositories.FuncionarioRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class FuncionarioService {
 
+    @Autowired
     private FuncionarioRepository repository;
 
-    public FuncionarioService(FuncionarioRepository repository){
-        this.repository = repository;
+    // 1. Criar um novo funcionário
+    public FuncionarioDTO criarFuncionario(FuncionarioDTO dto) {
+        Funcionario funcionario = new Funcionario();
+        funcionario.setNome(dto.getNome());
+        funcionario.setCpf(dto.getCpf());
+        funcionario.setCargo(dto.getCargo());
+        funcionario.setSetor(dto.getSetor());
+        funcionario.setDataDeAdmissao(dto.getDataDeAdmissao());
+        funcionario.setSalario(dto.getSalario());
+        funcionario.setEndereco(dto.getEndereco());
+        funcionario.setTelefone(dto.getTelefone());
+
+        Funcionario salvo = repository.save(funcionario);
+        return new FuncionarioDTO(salvo);
     }
 
-    public List<Funcionario>listarTodos(){
-        return repository.findAll();
+    // 2. Listar todos os funcionários
+    public List<FuncionarioDTO> listarTodos() {
+        return repository.findAll()
+                .stream()
+                .map(FuncionarioDTO::new)
+                .toList();
     }
 
-    public Funcionario buscarPorId(String id){
-        return repository.findById(id)
-                .orElseThrow(() -> new RuntimeException("funcionario nao encontrado"));
+    // 3. Buscar funcionário por ID
+    public FuncionarioDTO buscarPorId(String id) {
+        Funcionario f = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+        return new FuncionarioDTO(f);
     }
 
-    public Funcionario salvar (Funcionario funcionario){
-        return repository.save(funcionario);
+    // 4. Atualizar funcionário existente
+    public FuncionarioDTO atualizarFuncionario(String id, FuncionarioDTO dto) {
+        Funcionario funcionario = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+
+        funcionario.setNome(dto.getNome());
+        funcionario.setCpf(dto.getCpf());
+        funcionario.setCargo(dto.getCargo());
+        funcionario.setSetor(dto.getSetor());
+        funcionario.setDataDeAdmissao(dto.getDataDeAdmissao());
+        funcionario.setSalario(dto.getSalario());
+        funcionario.setEndereco(dto.getEndereco());
+        funcionario.setTelefone(dto.getTelefone());
+
+        Funcionario atualizado = repository.save(funcionario);
+        return new FuncionarioDTO(atualizado);
     }
 
-    public Funcionario atualizar(String id, Funcionario dadosAtualizados) {
-        Funcionario funcionario = buscarPorId(id);
-        funcionario.setNome(dadosAtualizados.getNome());
-        funcionario.setCpf(dadosAtualizados.getCpf());
-        funcionario.setCargo(dadosAtualizados.getCargo());
-        funcionario.setSetor(dadosAtualizados.getSetor());
-        funcionario.setDataDeAdmissao(dadosAtualizados.getDataDeAdmissao());
-        funcionario.setSalario(dadosAtualizados.getSalario());
-        funcionario.setEndereco(dadosAtualizados.getEndereco());
-        funcionario.setTelefone(dadosAtualizados.getTelefone());
-        return repository.save(funcionario);
+    // 5. Deletar funcionário por ID
+    public void deletarFuncionario(String id) {
+        Funcionario f = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+        repository.delete(f);
     }
-
-    public void deletar(String id){
-        repository.findById(id);
-    }
-
-    public List<Funcionario> filtrarPorSetor(String setor){
-        return repository.findBySetor(setor);
-    }
-
-    public List<Funcionario> filtrarPorNome(String nome){
-        return repository.findByNomeContaingIgnoreCase(nome);
-    }
-
-
-
-
-
-
 }
