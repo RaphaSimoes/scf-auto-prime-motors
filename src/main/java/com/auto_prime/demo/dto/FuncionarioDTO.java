@@ -31,6 +31,7 @@ public class FuncionarioDTO {
         this.dataDeAdmissao = f.getDataDeAdmissao();
         this.salario = f.getSalario();
         this.endereco = f.getEndereco();
+        this.telefone = f.getTelefone();
     }
 
 

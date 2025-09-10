@@ -22,6 +22,9 @@ public class Funcionario {
     private String endereco;
     private String telefone;
 
+    public Funcionario(){
+    }
+
     public void atualizarComDTO(FuncionarioDTO dto) {
         this.setNome(dto.getNome());
         this.setCpf(dto.getCpf());
@@ -31,9 +34,6 @@ public class Funcionario {
         this.setSalario(dto.getSalario());
         this.setEndereco(dto.getEndereco());
         this.setTelefone(dto.getTelefone());
-    }
-
-    public Funcionario(){
     }
 
 
@@ -121,7 +121,7 @@ public class Funcionario {
         return endereco;
     }
 
-    public void setEndereco(String endereço) {
+    public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
 
