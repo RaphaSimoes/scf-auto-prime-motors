@@ -1,15 +1,12 @@
 package com.auto_prime.demo.services;
 
-
 import com.auto_prime.demo.dto.FuncionarioDTO;
 import com.auto_prime.demo.entities.Funcionario;
-import com.auto_prime.demo.exceptions.ResourceNotFoundException;
 import com.auto_prime.demo.repositories.FuncionarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class FuncionarioService {
@@ -17,59 +14,62 @@ public class FuncionarioService {
     @Autowired
     private FuncionarioRepository repository;
 
-    // 1. Criar um novo funcionário
     public FuncionarioDTO criarFuncionario(FuncionarioDTO dto) {
         Funcionario funcionario = new Funcionario();
         funcionario.setNome(dto.getNome());
+        funcionario.setGenero(dto.getGenero());
         funcionario.setCpf(dto.getCpf());
+        funcionario.setTelefone(dto.getTelefone());
+        funcionario.setEndereco(dto.getEndereco());
         funcionario.setCargo(dto.getCargo());
         funcionario.setSetor(dto.getSetor());
-        funcionario.setDataDeAdmissao(dto.getDataDeAdmissao());
+        funcionario.setDataAdmissao(dto.getDataAdmissao());
         funcionario.setSalario(dto.getSalario());
-        funcionario.setEndereco(dto.getEndereco());
-        funcionario.setTelefone(dto.getTelefone());
+        funcionario.setStatus(dto.getStatus()); // ADICIONADO
 
         Funcionario salvo = repository.save(funcionario);
         return new FuncionarioDTO(salvo);
     }
 
-    // 2. Listar todos os funcionários
-    public List<FuncionarioDTO> listarTodos() {
-        return repository.findAll()
-                .stream()
-                .map(FuncionarioDTO::new)
-                .toList();
+    public List<FuncionarioDTO> buscarFuncionario() {
+        return repository.findAll().stream().map(FuncionarioDTO::new).toList();
     }
 
-    // 3. Buscar funcionário por ID
-    public FuncionarioDTO buscarPorId(String id) {
-        Funcionario f = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
-        return new FuncionarioDTO(f);
+    public void deletarFuncionario(Long id) {
+        repository.deleteById(id);
     }
 
-    // 4. Atualizar funcionário existente
-    public FuncionarioDTO atualizarFuncionario(String id, FuncionarioDTO dto) {
-        Funcionario funcionario = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
+    public FuncionarioDTO atualizarFuncionario(Long id, FuncionarioDTO dto) {
+        Funcionario entity = repository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado com o ID: " + id));
 
-        funcionario.setNome(dto.getNome());
-        funcionario.setCpf(dto.getCpf());
-        funcionario.setCargo(dto.getCargo());
-        funcionario.setSetor(dto.getSetor());
-        funcionario.setDataDeAdmissao(dto.getDataDeAdmissao());
-        funcionario.setSalario(dto.getSalario());
-        funcionario.setEndereco(dto.getEndereco());
-        funcionario.setTelefone(dto.getTelefone());
+        copyDtoToEntity(dto, entity);
 
-        Funcionario atualizado = repository.save(funcionario);
-        return new FuncionarioDTO(atualizado);
+        entity = repository.save(entity);
+        return new FuncionarioDTO(entity);
     }
+    private void copyDtoToEntity(FuncionarioDTO dto, Funcionario entity) {
+        if (dto.getSalario() != null && !dto.getSalario().isBlank()) {
+            try {
+                // Remove "R$", espaços, e troca a vírgula por ponto
+                String salarioLimpo = dto.getSalario()
+                        .replaceAll("[^\\d,]", "")
+                        .replace(",", ".");
+                entity.setSalario(salarioLimpo);
+            } catch (NumberFormatException e) {
+                entity.setSalario("0.0");
+            }
+        }
 
-    // 5. Deletar funcionário por ID
-    public void deletarFuncionario(String id) {
-        Funcionario f = repository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Funcionário não encontrado"));
-        repository.delete(f);
+        entity.setNome(dto.getNome());
+        entity.setGenero(dto.getGenero());
+        entity.setCpf(dto.getCpf());
+        entity.setTelefone(dto.getTelefone());
+        entity.setEndereco(dto.getEndereco());
+        entity.setCargo(dto.getCargo());
+        entity.setSetor(dto.getSetor());
+        entity.setDataAdmissao(dto.getDataAdmissao());
+        entity.setSalario(dto.getSalario());
+        entity.setStatus(dto.getStatus());
     }
 }
